@@ -2,12 +2,11 @@
 # based on which the GraphQL API is generated
 
 type Link @model {
-    id: ID! @isUnique
-    hash: String!
-    url: String!
-    description: String
+  id: ID! @isUnique
+  hash: String!
+  url: String!
+  description: String
 }
-
 
 # Uncomment the model below as well
 
