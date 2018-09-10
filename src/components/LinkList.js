@@ -10,6 +10,9 @@ const ALL_LINKS_QUERY = gql`
       url
       description
       hash
+      stats {
+        clicks
+      }
     }
   }
 `;
