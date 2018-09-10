@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import AppRouter from "./AppRouter";
 import registerServiceWorker from "./registerServiceWorker";
 import { ApolloProvider } from "react-apollo";
 import { ApolloClient } from "apollo-client";
@@ -40,5 +40,8 @@ const client = new ApolloClient({
 const withApolloProvider = Comp => (
   <ApolloProvider client={client}>{Comp}</ApolloProvider>
 );
-ReactDOM.render(withApolloProvider(<App />), document.getElementById("root"));
+ReactDOM.render(
+  withApolloProvider(<AppRouter />),
+  document.getElementById("root")
+);
 registerServiceWorker();
