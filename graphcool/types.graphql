@@ -6,6 +6,7 @@ type Link @model {
   hash: String
   url: String!
   description: String
+  dummy: String
   stats: LinkStats @relation(name: "LinkOnLinkStats")
 }
 

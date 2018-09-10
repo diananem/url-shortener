@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import gql from "graphql-tag";
-import { graphql } from "react-apollo";
+import { graphql, compose } from "react-apollo";
 
 const GET_FULL_LINK_QUERY = gql`
   query GetFullLink($hash: String!) {
@@ -18,7 +18,7 @@ const GET_FULL_LINK_QUERY = gql`
 
 const UPDATE_CLICK_COUNT_MUTATION = gql`
   mutation UpdateClickCount($id: ID!, $clicks: Int!) {
-    updateLink(id: $id, stats: { clicks: $clicks }) {
+    updateLinkStats(id: $id, clicks: $clicks) {
       id
     }
   }
@@ -39,7 +39,7 @@ const ShortLinkRedirect = ({
   data: { loading, error, allLinks }
 }) => {
   if (error) {
-    return <div>Error occurred</div>;
+    return <div>Error occurred: {error}</div>;
   }
   if (loading) {
     return <div>Loading ...</div>;
