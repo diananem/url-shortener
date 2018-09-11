@@ -10,6 +10,7 @@ import { HttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
+import { ApolloLink } from "apollo-link";
 
 //Set up subscription
 const wsLink = new WebSocketLink({
@@ -22,6 +23,18 @@ const wsLink = new WebSocketLink({
 const httpLink = new HttpLink({
   uri: "https://api.graph.cool/simple/v1/cjky7pfnm593o0196yq9mgr3v"
 });
+const apolloLinkWithToken = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("SHORTLY_TOKEN");
+  const authHeader = token ? `Bearer ${token}` : null;
+  operation.setContext({
+    headers: {
+      authorization: authHeader
+    }
+  });
+  return forward(operation);
+});
+
+const httpLinkWithToken = apolloLinkWithToken.concat(httpLink);
 
 const link = split(
   ({ query }) => {
@@ -29,7 +42,7 @@ const link = split(
     return kind === "OperationDefinition" && operation === "subscription";
   },
   wsLink,
-  httpLink
+  httpLinkWithToken
 );
 
 const client = new ApolloClient({

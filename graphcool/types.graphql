@@ -8,6 +8,7 @@ type Link @model {
   description: String
   dummy: String
   stats: LinkStats @relation(name: "LinkOnLinkStats")
+  createdBy: User @relation(name: "UserLinks")
 }
 
 type LinkStats @model {
@@ -35,4 +36,5 @@ type User @model {
   updatedAt: DateTime! # read-only (managed by Graphcool)
   email: String! @isUnique
   password: String!
+  links: [Link!]! @relation(name: "UserLinks")
 }
